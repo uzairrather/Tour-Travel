@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Calendar, Users, Phone, ShoppingCart, User, ChevronDown, Star, Clock, ArrowRight, Play, Facebook, Twitter, Instagram, Youtube, ChevronLeft, ChevronRight, Hotel, Utensils, Home, Activity, Car, Menu, X, Mountain } from 'lucide-react';
+import { Search, MapPin, Calendar, Users, Phone, ShoppingCart, User, ChevronDown, Star, Clock, ArrowRight, Play, Facebook, Twitter, Instagram, Youtube, ChevronLeft, ChevronRight, Hotel, Utensils, Home, Activity, Car, Menu, X, Mountain, Globe, CheckCircle2, XCircle, MessageSquare } from 'lucide-react';
 
 const TourexWebsite = () => {
   const [activeTab, setActiveTab] = useState('tour');
   const [activePackageTab, setActivePackageTab] = useState('hotel');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home');
+  const [selectedTour, setSelectedTour] = useState(null);
+  const [expandedDay, setExpandedDay] = useState(0);
+  const [selectedTime, setSelectedTime] = useState('12:00');
 
   const heroSlides = [
     {
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920',
+      image: '/images/hero-1.jpg',
       title: 'Dal Lake, Srinagar',
       subtitle: 'Experience The Jewel In The Crown Of Kashmir',
       subtitle2: 'Float On Serene Waters Surrounded By Mountains'
     },
     {
-      image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1920',
+      image: '/images/hero-2.jpg',
       title: 'Gulmarg Paradise',
       subtitle: 'Discover The Meadow Of Flowers',
       subtitle2: 'Adventure Awaits In The Valley Of Kashmir'
     },
     {
-      image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=1920',
+      image: '/images/hero-3.jpg',
       title: 'Pahalgam Valley',
       subtitle: 'Explore The Valley Of Shepherds',
       subtitle2: 'Nature\'s Perfect Creation In Kashmir'
@@ -31,7 +35,7 @@ const TourexWebsite = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 7000);
+    }, 15000);
     return () => clearInterval(timer);
   }, []);
 
@@ -58,7 +62,7 @@ const TourexWebsite = () => {
           transform: scale(1);
         }
         100% {
-          transform: scale(1.2);
+          transform: scale(1.3);
         }
       }
       @keyframes droneZoomOut {
@@ -70,10 +74,10 @@ const TourexWebsite = () => {
         }
       }
       .drone-zoom-in {
-        animation: droneZoomIn 7s ease-out forwards;
+        animation: droneZoomIn 30s ease-out forwards;
       }
       .drone-zoom-out {
-        animation: droneZoomOut 7s ease-out forwards;
+        animation: droneZoomOut 30s ease-out forwards;
       }
       .hero-slide {
         transition: opacity 1.2s ease-in-out;
@@ -94,14 +98,64 @@ const TourexWebsite = () => {
   const tourPackages = [
     {
       id: 1,
-      title: 'Two Hour Walking Tour Of Manhattan',
-      location: 'Veins City, Italy',
-      days: '7 Days',
-      price: 320,
+      title: 'Vatican Museums Sistine Chapel Skip The Line',
+      location: 'Street Bintage, Veins City, Italy',
+      days: '4 Days',
+      price: 59,
       image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500',
       badge: 'New',
       badgeColor: 'bg-green-500',
-      reviews: 5
+      reviews: 5,
+      duration: '4 Days',
+      type: 'Adventure',
+      groupSize: '50 People',
+      languages: 'English',
+      gallery: [
+        'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
+        'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+        'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400',
+        'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400'
+      ],
+      description: 'Isting Stonehenge, Bath, And Windsor Castle In One Day Is Next To Impossible. Designed Specifically For Lers With Limited Time In London, This Tour Allows You To Check Off A Range Of Southern England\'s Are L Attractions In Just One Day By Eliminating The Hassle Of Traveling Between Each One Independently. Travel By Comfortable Coach And Witness Your Guide Bring Each.',
+      highlights: [
+        'Tour The City With A Licensed NYC Tour Guide, Who',
+        'Explore With A Guide To Delve Deeper Into The History',
+        'Great For History Buffs And Travelers With Limited Time'
+      ],
+      included: [
+        'Pick And Drop Service',
+        '1 Meal Per Day',
+        'Cruise Dinner & Music Event',
+        'Visit 7 Best Places'
+      ],
+      excluded: [
+        'Gratuities',
+        'Return Airport And Round Trip Transfers.',
+        'Luxury Air-Conditioned Coach',
+        'Tickets'
+      ],
+      tourPlan: [
+        {
+          day: 'Day-01',
+          title: 'London To Amsterdam',
+          description: 'Trade Center Is The Seventh Tallest Building In The World And The Tallest Building In The W Hemisph Ere. This Skyscraper Standst View Of New York City. From Here, You Have Awesome Manhattan The Statue Of Liberty, Brooklyn, Staten Island,'
+        },
+        {
+          day: 'Day-02',
+          title: 'Art Museums, Central Park, Rockefeller Center, Times Square',
+          description: 'Experience the cultural heart of the city with visits to world-renowned museums and iconic landmarks.'
+        },
+        {
+          day: 'Day-03',
+          title: 'The Statue Of Liberty, Ellis Island, The Tenement Museum & A Food Tour',
+          description: 'Discover American history and enjoy a culinary adventure through diverse neighborhoods.'
+        },
+        {
+          day: 'Day-04',
+          title: 'Empire State Building, Chelsea Market, The High Line & Hudson Yards',
+          description: 'End your journey with breathtaking views and modern architectural marvels.'
+        }
+      ]
     },
     {
       id: 2,
@@ -109,11 +163,51 @@ const TourexWebsite = () => {
       location: 'Dubai, Emirates',
       days: '2 Days',
       price: 149,
-      oldPrice: 299,
+      oldPrice: 389,
       image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500',
       badge: '% Offer',
       badgeColor: 'bg-purple-600',
-      reviews: 5
+      reviews: 5,
+      duration: '2 Days',
+      type: 'City Tour',
+      groupSize: '30 People',
+      languages: 'English, Arabic',
+      gallery: [
+        'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800',
+        'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800',
+        'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400',
+        'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400'
+      ],
+      description: 'Explore the magnificent city of Dubai with its stunning architecture, luxury shopping, and world-class entertainment. Experience the perfect blend of traditional Arabian culture and modern luxury.',
+      highlights: [
+        'Visit Burj Khalifa, the world\'s tallest building',
+        'Experience traditional souks and markets',
+        'Enjoy luxury shopping at Dubai Mall'
+      ],
+      included: [
+        'Hotel Pickup & Drop-off',
+        'Professional Tour Guide',
+        'Entry Tickets',
+        'Lunch at Premium Restaurant'
+      ],
+      excluded: [
+        'Personal Expenses',
+        'Optional Activities',
+        'Travel Insurance',
+        'Gratuities'
+      ],
+      tourPlan: [
+        {
+          day: 'Day-01',
+          title: 'Dubai City Tour',
+          description: 'Discover the iconic landmarks of Dubai including Burj Khalifa, Dubai Mall, and the stunning Dubai Fountain.'
+        },
+        {
+          day: 'Day-02',
+          title: 'Desert Safari Adventure',
+          description: 'Experience an exhilarating desert safari with dune bashing, camel riding, and traditional BBQ dinner under the stars.'
+        }
+      ]
     },
     {
       id: 3,
@@ -124,7 +218,47 @@ const TourexWebsite = () => {
       image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500',
       badge: 'New',
       badgeColor: 'bg-green-500',
-      reviews: 5
+      reviews: 5,
+      duration: '2 Days',
+      type: 'Beach',
+      groupSize: '25 People',
+      languages: 'English, Indonesian',
+      gallery: [
+        'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800',
+        'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800',
+        'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400',
+        'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400'
+      ],
+      description: 'Escape to paradise in the Thousand Islands. Enjoy pristine beaches, crystal-clear waters, and tropical island life.',
+      highlights: [
+        'Island hopping adventure',
+        'Snorkeling in coral reefs',
+        'Beach activities and water sports'
+      ],
+      included: [
+        'Boat Transportation',
+        'Snorkeling Equipment',
+        'Island Tour Guide',
+        'Fresh Seafood Lunch'
+      ],
+      excluded: [
+        'Accommodation',
+        'Personal Equipment',
+        'Travel Insurance',
+        'Extra Activities'
+      ],
+      tourPlan: [
+        {
+          day: 'Day-01',
+          title: 'Island Discovery',
+          description: 'Visit multiple islands, enjoy snorkeling and beach activities.'
+        },
+        {
+          day: 'Day-02',
+          title: 'Marine Adventure',
+          description: 'Explore underwater life and relax on pristine beaches.'
+        }
+      ]
     },
     {
       id: 4,
@@ -136,7 +270,52 @@ const TourexWebsite = () => {
       image: 'https://images.unsplash.com/photo-1526495124232-a04e1849168c?w=500',
       badge: 'Featured',
       badgeColor: 'bg-orange-500',
-      reviews: 4
+      reviews: 4,
+      duration: '3 Days',
+      type: 'Nature',
+      groupSize: '40 People',
+      languages: 'English',
+      gallery: [
+        'https://images.unsplash.com/photo-1526495124232-a04e1849168c?w=800',
+        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+        'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400',
+        'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400'
+      ],
+      description: 'Journey through America\'s most spectacular national parks. Experience breathtaking landscapes and natural wonders.',
+      highlights: [
+        'Visit iconic national parks',
+        'Guided nature walks',
+        'Wildlife spotting opportunities'
+      ],
+      included: [
+        'Transportation',
+        'Park Entry Fees',
+        'Expert Guide',
+        'Meals'
+      ],
+      excluded: [
+        'Accommodation',
+        'Personal Gear',
+        'Travel Insurance',
+        'Souvenirs'
+      ],
+      tourPlan: [
+        {
+          day: 'Day-01',
+          title: 'Park Exploration',
+          description: 'Begin your adventure exploring the stunning landscapes.'
+        },
+        {
+          day: 'Day-02',
+          title: 'Wildlife & Nature',
+          description: 'Discover diverse wildlife and natural formations.'
+        },
+        {
+          day: 'Day-03',
+          title: 'Scenic Trails',
+          description: 'Hike through beautiful trails and viewpoints.'
+        }
+      ]
     }
   ];
 
@@ -163,59 +342,488 @@ const TourexWebsite = () => {
     }
   ];
 
-  const testimonials = [
-    {
-      name: 'Jacob Jones',
-      title: 'CEO, Traveller',
-      avatar: 'https://i.pravatar.cc/150?img=12',
-      rating: 4,
-      text: 'Morem Ipsum Dolor Siterey Amet Mean Earty Areasew Consec Taetur Adipisrvice Olivirg Ipsum Dolor Consectetur.'
-    },
-    {
-      name: 'Floyd Miles',
-      title: 'CEO, Traveller',
-      avatar: 'https://i.pravatar.cc/150?img=33',
-      rating: 3,
-      text: 'Morem Ipsum Dolor Siterey Amet Mean Earty Areasew Consec Taetur Adipisrvice Olivirg Ipsum Dolor Consectetur.'
-    },
-    {
-      name: 'Esther Howard',
-      title: 'CEO, Traveller',
-      avatar: 'https://i.pravatar.cc/150?img=45',
-      rating: 4,
-      text: 'Morem Ipsum Dolor Siterey Amet Mean Earty Areasew Consec Taetur Adipisrvice Olivirg Ipsum Dolor Consectetur.'
-    }
-  ];
+  const handleTourClick = (tour) => {
+    setSelectedTour(tour);
+    setCurrentPage('details');
+    window.scrollTo(0, 0);
+  };
 
-  const blogs = [
-    {
-      id: 1,
-      title: 'Spiritual Sojourn: Pilgrimage Tours For Soul Seekers',
-      category: 'Travel Bner',
-      categoryColor: 'bg-purple-600',
-      date: '26th Sep, 2024',
-      readTime: '5 Mins Read',
-      image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500'
-    },
-    {
-      id: 2,
-      title: 'Wine Country Escapes: Vineyard Tours For Connoisseurs',
-      category: 'Hiking',
-      categoryColor: 'bg-purple-600',
-      date: '26th Sep, 2024',
-      readTime: '5 Mins Read',
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500'
-    },
-    {
-      id: 3,
-      title: 'Thrills & Chills: Extreme Sports Tours For Adrenaline',
-      category: 'Adventure',
-      categoryColor: 'bg-purple-600',
-      date: '26th Sep, 2024',
-      readTime: '5 Mins Read',
-      image: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=500'
-    }
-  ];
+  const TourDetailsPage = () => {
+    const [tickets, setTickets] = useState({ adult: 0, youth: 0, children: 0 });
+    const [extras, setExtras] = useState({ serviceBooking: false, servicePerson: false });
+
+    const calculateTotal = () => {
+      let total = 0;
+      total += tickets.adult * 20;
+      total += tickets.youth * 20;
+      total += tickets.children * 15;
+      if (extras.serviceBooking) total += 30;
+      if (extras.servicePerson) total += 20;
+      if (extras.servicePerson && tickets.adult > 0) total += tickets.adult * 15;
+      if (extras.servicePerson && tickets.youth > 0) total += tickets.youth * 20;
+      return total;
+    };
+
+    return (
+      <div className="min-h-screen bg-white">
+        {/* Breadcrumb */}
+        <div className="bg-gray-50 py-6 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center text-sm text-gray-600">
+              <button onClick={() => setCurrentPage('home')} className="hover:text-purple-600">Home</button>
+              <ChevronRight className="w-4 h-4 mx-2" />
+              <button onClick={() => setCurrentPage('home')} className="hover:text-purple-600">Tour Grid</button>
+              <ChevronRight className="w-4 h-4 mx-2" />
+              <span className="text-purple-600">{selectedTour.title}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Title Section */}
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold mb-4">{selectedTour.title}</h1>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center text-gray-600">
+                <MapPin className="w-5 h-5 mr-2" />
+                <span>{selectedTour.location}</span>
+                <div className="flex items-center ml-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                  ))}
+                  <span className="ml-2">({selectedTour.reviews} Reviews)</span>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <button className="flex items-center space-x-2 text-gray-600 hover:text-purple-600">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                  <span>Share</span>
+                </button>
+                <button className="flex items-center space-x-2 text-gray-600 hover:text-purple-600">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                  <span>Add To Wishlist</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2">
+              {/* Image Gallery */}
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="col-span-2 rounded-lg overflow-hidden">
+                  <img src={selectedTour.gallery[0]} alt="" className="w-full h-96 object-cover" />
+                </div>
+                <div className="relative rounded-lg overflow-hidden">
+                  <img src={selectedTour.gallery[1]} alt="" className="w-full h-48 object-cover" />
+                  <button className="absolute inset-0 bg-black/30 flex items-center justify-center hover:bg-black/40">
+                    <Play className="w-12 h-12 text-white" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="rounded-lg overflow-hidden">
+                    <img src={selectedTour.gallery[2]} alt="" className="w-full h-48 object-cover" />
+                  </div>
+                  <div className="rounded-lg overflow-hidden">
+                    <img src={selectedTour.gallery[3]} alt="" className="w-full h-48 object-cover" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Tour Info Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <Clock className="w-6 h-6 text-purple-600 mb-2" />
+                  <div className="text-sm text-gray-600">Duration</div>
+                  <div className="font-semibold">{selectedTour.duration}</div>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <Globe className="w-6 h-6 text-purple-600 mb-2" />
+                  <div className="text-sm text-gray-600">Type</div>
+                  <div className="font-semibold">{selectedTour.type}</div>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <Users className="w-6 h-6 text-purple-600 mb-2" />
+                  <div className="text-sm text-gray-600">Group Size</div>
+                  <div className="font-semibold">{selectedTour.groupSize}</div>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <MessageSquare className="w-6 h-6 text-purple-600 mb-2" />
+                  <div className="text-sm text-gray-600">Languages</div>
+                  <div className="font-semibold">{selectedTour.languages}</div>
+                </div>
+              </div>
+
+              {/* About This Tour */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">About This Tour</h2>
+                <p className="text-gray-600 leading-relaxed">{selectedTour.description}</p>
+              </div>
+
+              {/* Trip Highlights */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Trip Highlights</h2>
+                <div className="space-y-3">
+                  {selectedTour.highlights.map((highlight, idx) => (
+                    <div key={idx} className="flex items-start space-x-3">
+                      <CheckCircle2 className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" />
+                      <p className="text-gray-600">{highlight}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Included/Excluded */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Included/Exclude</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    {selectedTour.included.map((item, idx) => (
+                      <div key={idx} className="flex items-start space-x-3">
+                        <CheckCircle2 className="w-5 h-5 text-purple-600 flex-shrink-0 mt-1" />
+                        <span className="text-gray-600">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-3">
+                    {selectedTour.excluded.map((item, idx) => (
+                      <div key={idx} className="flex items-start space-x-3">
+                        <XCircle className="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" />
+                        <span className="text-gray-600">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Tour Plan */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Tour Plan</h2>
+                <p className="text-gray-600 mb-6">Castle In One Day Is Next To Impossible. Designed Specifically For Trave Arelimited Time In London Ws You To Check Off A Range Of Southern England's Are Historical</p>
+                <div className="space-y-4">
+                  {selectedTour.tourPlan.map((day, idx) => (
+                    <div key={idx} className="border border-gray-200 rounded-lg">
+                      <button
+                        onClick={() => setExpandedDay(expandedDay === idx ? -1 : idx)}
+                        className="w-full flex items-center justify-between p-4 hover:bg-gray-50"
+                      >
+                        <div className="flex items-center space-x-4">
+                          <span className="bg-purple-600 text-white px-3 py-1 rounded text-sm font-semibold">{day.day}</span>
+                          <span className="font-semibold">{day.title}</span>
+                        </div>
+                        <ChevronDown className={`w-5 h-5 transition-transform ${expandedDay === idx ? 'rotate-180' : ''}`} />
+                      </button>
+                      {expandedDay === idx && (
+                        <div className="p-4 border-t border-gray-200 bg-gray-50">
+                          <p className="text-gray-600">{day.description}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Location</h2>
+                <p className="text-gray-600 mb-4">Castle In One Day Is Next To Impossible. Designed Specifically For Trave Arelimited Time In London, This Tour Ws You To Check Off A Range Of Southern England's Are Historical.</p>
+                <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
+                  <MapPin className="w-12 h-12 text-gray-400" />
+                </div>
+              </div>
+
+              {/* Customer Reviews */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+                <p className="text-gray-600 mb-6">Castle In One Day Is Next To Impossible. Designed Specifically For Trave Arelimited Time In London This Tour Ws You To Check Off A Range Of Southern England's Are Historical</p>
+                
+                <div className="bg-gray-50 p-6 rounded-lg mb-6">
+                  <div className="flex items-center space-x-8">
+                    <div className="text-center">
+                      <div className="text-5xl font-bold text-purple-600">4.9</div>
+                      <div className="text-lg font-semibold mt-2">Excellent</div>
+                      <div className="text-sm text-gray-600">Based On 1562 Reviews</div>
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      {[
+                        { label: 'Location', value: 4 },
+                        { label: 'Amenities', value: 4 },
+                        { label: 'Services', value: 4 },
+                        { label: 'Price', value: 3.5 },
+                        { label: 'Rooms', value: 5 }
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex items-center space-x-3">
+                          <span className="w-24 text-sm text-gray-600">{item.label}</span>
+                          <div className="flex-1 bg-gray-200 rounded-full h-2">
+                            <div className="bg-purple-600 h-2 rounded-full" style={{ width: `${(item.value / 5) * 100}%` }}></div>
+                          </div>
+                          <span className="w-12 text-sm font-semibold">{item.value}/5</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Individual Reviews */}
+                <div className="space-y-6 mb-8">
+                  <div className="border-b border-gray-200 pb-6">
+                    <div className="flex items-start space-x-4">
+                      <img src="https://i.pravatar.cc/150?img=12" alt="" className="w-16 h-16 rounded-full" />
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <div>
+                            <h4 className="font-bold">Ronald Richards</h4>
+                            <p className="text-sm text-gray-600">20 Mar, 2023 . 4:00 Pm</p>
+                          </div>
+                          <div className="flex">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-gray-600">Castle In One Day Is Next To Impossible. Designed Specifically For Trave Areli Areafol Time In London, This Tour Allou To Check Off A Range Of Southern Day Is Next Together Impossible. Designed SpecificEngland.</p>
+                        <button className="mt-3 text-purple-600 font-semibold text-sm">Reply</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="border-b border-gray-200 pb-6">
+                    <div className="flex items-start space-x-4">
+                      <img src="https://i.pravatar.cc/150?img=45" alt="" className="w-16 h-16 rounded-full" />
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <div>
+                            <h4 className="font-bold">Annette Black</h4>
+                            <p className="text-sm text-gray-600">20 Mar, 2023 . 4:00 Pm</p>
+                          </div>
+                          <div className="flex">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-gray-600">Castle In One Day Is Next To Impossible. Designed Specifically For Trave Areli Areafol Time In London, This Tour Allou To Check Off A Range Of Southern Day Is Next Together Impossible. Designed SpecificEngland.</p>
+                        <button className="mt-3 text-purple-600 font-semibold text-sm">Reply</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Leave A Reply */}
+                <div className="bg-gray-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold mb-6">Leave A Reply</h3>
+                  <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    {[
+                      { label: 'Location', value: 0 },
+                      { label: 'Price', value: 0 },
+                      { label: 'Amenities', value: 0 },
+                      { label: 'Rooms', value: 0 },
+                      { label: 'Services', value: 0 }
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-center justify-between">
+                        <span className="text-gray-700">{item.label} :</span>
+                        <div className="flex space-x-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-5 h-5 text-gray-300 cursor-pointer hover:text-yellow-400" />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    <input type="text" placeholder="Your Name" className="px-4 py-3 border border-gray-300 rounded-lg outline-none focus:border-purple-600" />
+                    <input type="email" placeholder="E-mail Address" className="px-4 py-3 border border-gray-300 rounded-lg outline-none focus:border-purple-600" />
+                  </div>
+                  <textarea placeholder="Write Message" rows="4" className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:border-purple-600 mb-4"></textarea>
+                  <div className="flex items-center mb-4">
+                    <input type="checkbox" id="save" className="mr-2" />
+                    <label htmlFor="save" className="text-sm text-gray-600">Save My Name, Email, And Website In This Browser For The Next Time I Comment.</label>
+                  </div>
+                  <button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold">SUBMIT REVIEW</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Booking Sidebar */}
+            <div className="lg:col-span-1">
+              <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-24">
+                <h3 className="text-2xl font-bold mb-6">Book This Tour</h3>
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">When (Date)</label>
+                  <div className="flex items-center border border-gray-300 rounded-lg px-4 py-3">
+                    <Calendar className="w-5 h-5 text-gray-400 mr-2" />
+                    <input type="text" placeholder="Select date" className="w-full outline-none" />
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Time:</label>
+                  <div className="flex space-x-4">
+                    <label className="flex items-center">
+                      <input type="radio" name="time" value="12:00" checked={selectedTime === '12:00'} onChange={(e) => setSelectedTime(e.target.value)} className="mr-2" />
+                      <span>12:00</span>
+                    </label>
+                    <label className="flex items-center">
+                      <input type="radio" name="time" value="19:00" checked={selectedTime === '19:00'} onChange={(e) => setSelectedTime(e.target.value)} className="mr-2" />
+                      <span>19:00</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-4">Tickets:</label>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-semibold">Adult</div>
+                        <div className="text-sm text-gray-600">(14+ years) $20</div>
+                      </div>
+                      <select value={tickets.adult} onChange={(e) => setTickets({...tickets, adult: parseInt(e.target.value)})} className="border border-gray-300 rounded px-3 py-2">
+                        {[...Array(11)].map((_, i) => (
+                          <option key={i} value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-semibold">Youth</div>
+                        <div className="text-sm text-gray-600">(13-17 years) $20</div>
+                      </div>
+                      <select value={tickets.youth} onChange={(e) => setTickets({...tickets, youth: parseInt(e.target.value)})} className="border border-gray-300 rounded px-3 py-2">
+                        {[...Array(11)].map((_, i) => (
+                          <option key={i} value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-semibold">Children</div>
+                        <div className="text-sm text-gray-600">(13-17 years) $15</div>
+                      </div>
+                      <select value={tickets.children} onChange={(e) => setTickets({...tickets, children: parseInt(e.target.value)})} className="border border-gray-300 rounded px-3 py-2">
+                        {[...Array(11)].map((_, i) => (
+                          <option key={i} value={i}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-4">Add Extra:</label>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="flex items-center cursor-pointer">
+                        <input type="checkbox" checked={extras.serviceBooking} onChange={(e) => setExtras({...extras, serviceBooking: e.target.checked})} className="mr-2" />
+                        <span>Service Per Booking</span>
+                      </label>
+                      <span className="font-semibold">$30.00</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <label className="flex items-center cursor-pointer">
+                        <input type="checkbox" checked={extras.servicePerson} onChange={(e) => setExtras({...extras, servicePerson: e.target.checked})} className="mr-2" />
+                        <span>Service Per Person</span>
+                      </label>
+                      <span className="font-semibold">$20.00</span>
+                    </div>
+                    {extras.servicePerson && (
+                      <>
+                        <div className="flex items-center justify-between pl-6">
+                          <span className="text-sm text-gray-600">Adult:</span>
+                          <span className="text-sm">$15.00</span>
+                        </div>
+                        <div className="flex items-center justify-between pl-6">
+                          <span className="text-sm text-gray-600">Youth:</span>
+                          <span className="text-sm">$20.00</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 pt-4 mb-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-lg font-semibold">Total Cost:</span>
+                    <span className="text-2xl font-bold text-purple-600">${calculateTotal()}.00</span>
+                  </div>
+                  <div className="text-sm text-gray-600 mb-4">From ${selectedTour.price}.00/Person</div>
+                </div>
+
+                <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-lg font-bold text-lg">
+                  BOOK NOW
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  if (currentPage === 'details') {
+    return (
+      <div className="min-h-screen bg-white">
+        {/* Navbar */}
+        <nav className="bg-white shadow-sm fixed w-full z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-20">
+              <div className="flex items-center space-x-2 cursor-pointer" onClick={() => setCurrentPage('home')}>
+                <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                  <Mountain className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="text-xl font-bold">Tourex</div>
+                  <div className="text-xs text-gray-400">A Travel Agency</div>
+                </div>
+              </div>
+
+              <div className="hidden lg:flex space-x-8">
+                <button onClick={() => setCurrentPage('home')} className="hover:text-purple-600 flex items-center">Home <ChevronDown className="w-4 h-4 ml-1" /></button>
+                <a href="#" className="hover:text-purple-600 flex items-center">Features <ChevronDown className="w-4 h-4 ml-1" /></a>
+                <a href="#" className="hover:text-purple-600 flex items-center">Pages <ChevronDown className="w-4 h-4 ml-1" /></a>
+                <a href="#" className="hover:text-purple-600 flex items-center">Blogs <ChevronDown className="w-4 h-4 ml-1" /></a>
+                <a href="#" className="hover:text-purple-600">Contact</a>
+              </div>
+
+              <div className="flex items-center space-x-3 lg:space-x-6">
+                <div className="hidden md:flex items-center space-x-2">
+                  <Phone className="w-4 h-4" />
+                  <div>
+                    <div className="text-xs text-gray-400">Call Us:</div>
+                    <div className="text-sm font-semibold">+123 5959 66</div>
+                  </div>
+                </div>
+                <div className="relative hidden sm:block">
+                  <ShoppingCart className="w-5 h-5" />
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">1</span>
+                </div>
+                <button className="hidden sm:flex bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full items-center space-x-2">
+                  <User className="w-4 h-4" />
+                  <span>Login</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div className="pt-20">
+          <TourDetailsPage />
+        </div>
+
+        {/* Footer */}
+        <footer className="bg-gray-900 text-white py-12 px-4 mt-20">
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="text-gray-400">Copyright ©Tourex | All Right Reserved</p>
+          </div>
+        </footer>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -287,7 +895,6 @@ const TourexWebsite = () => {
 
       {/* Hero Section */}
       <div className="relative h-screen">
-        {/* Image Container with overflow hidden */}
         <div className="absolute inset-0 overflow-hidden">
           {heroSlides.map((slide, index) => (
             <div 
@@ -301,7 +908,7 @@ const TourexWebsite = () => {
               }}
             />
           ))}
-          <div className="absolute inset-0 bg-black/40 z-10"></div>
+          <div className="absolute inset-0 bg-black/20 z-10"></div>
         </div>
         
         <button 
@@ -324,15 +931,15 @@ const TourexWebsite = () => {
             <p className="text-base sm:text-xl mb-2">{heroSlides[currentSlide].subtitle}</p>
             <p className="text-base sm:text-xl mb-6">{heroSlides[currentSlide].subtitle2}</p>
             <div className="text-3xl sm:text-4xl font-bold mb-8">
-              Booking Start From <span className="text-4xl sm:text-5xl">${299}</span><span className="text-xl sm:text-2xl">/night</span>
+              Booking Start From <span className="text-4xl sm:text-5xl">${459}</span><span className="text-xl sm:text-2xl">/night</span>
             </div>
             <button className="bg-purple-600 hover:bg-purple-700 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold flex items-center mx-auto">
               TAKE A TOUR <ArrowRight className="ml-2 w-5 h-5" />
             </button>
           </div>
 
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-full max-w-6xl bg-white rounded-lg shadow-2xl mx-4" style={{zIndex: 50}}>
-            <div className="flex overflow-x-auto border-b scrollbar-hide bg-white rounded-t-lg">
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-full max-w-6xl bg-white rounded-lg shadow-2xl mx-4 px-4 sm:px-6" style={{zIndex: 50}}>
+            <div className="flex justify-center overflow-x-auto border-b scrollbar-hide bg-white rounded-t-lg px-8 sm:px-12 md:px-16 lg:px-24">
               <button
                 onClick={() => setActiveTab('tour')}
                 className={`flex-shrink-0 flex items-center gap-2 py-4 px-4 sm:px-6 font-semibold text-sm sm:text-base bg-white ${activeTab === 'tour' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'}`}
@@ -418,7 +1025,7 @@ const TourexWebsite = () => {
       </div>
 
       {/* TriPlan Section */}
-      <div className="py-20 sm:py-32 px-4 max-w-7xl mx-auto ">
+      <div className="py-20 sm:py-32 px-4 max-w-7xl mx-auto mt-32 md:mt-40">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           <div className="flex flex-col justify-center">
             <h3 className="text-red-500 font-semibold mb-4 text-sm sm:text-base uppercase tracking-wide">Our Tour Gallery</h3>
@@ -469,51 +1076,7 @@ const TourexWebsite = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {tourPackages.map((pkg) => (
-              <div key={pkg.id} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <div className="relative">
-                  <img src={pkg.image} alt={pkg.title} className="w-full h-48 object-cover" />
-                  <span className={`absolute top-4 left-4 ${pkg.badgeColor} text-white px-3 py-1 rounded text-sm font-semibold`}>
-                    {pkg.badge}
-                  </span>
-                  <button className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </button>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-lg mb-3">{pkg.title}</h3>
-                  <div className="flex items-center text-gray-600 text-sm mb-2">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    {pkg.location}
-                  </div>
-                  <div className="flex items-center text-gray-600 text-sm mb-4">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {pkg.days}
-                  </div>
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                    <div>
-                      {pkg.oldPrice && (
-                        <span className="text-gray-400 line-through text-sm mr-2">${pkg.oldPrice}</span>
-                      )}
-                      <span className="text-purple-600 font-bold text-2xl">${pkg.price}</span>
-                      <span className="text-gray-600 text-sm">/Person</span>
-                    </div>
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`w-4 h-4 ${i < pkg.reviews ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
-                      ))}
-                      <span className="text-sm text-gray-600 ml-1">({pkg.reviews})</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-            {tourPackages.map((pkg) => (
-              <div key={`row2-${pkg.id}`} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <div key={pkg.id} onClick={() => handleTourClick(pkg)} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
                 <div className="relative">
                   <img src={pkg.image} alt={pkg.title} className="w-full h-48 object-cover" />
                   <span className={`absolute top-4 left-4 ${pkg.badgeColor} text-white px-3 py-1 rounded text-sm font-semibold`}>
@@ -699,7 +1262,29 @@ const TourexWebsite = () => {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, idx) => (
+            {[
+              {
+                name: 'Jacob Jones',
+                title: 'CEO, Traveller',
+                avatar: 'https://i.pravatar.cc/150?img=12',
+                rating: 4,
+                text: 'Morem Ipsum Dolor Siterey Amet Mean Earty Areasew Consec Taetur Adipisrvice Olivirg Ipsum Dolor Consectetur.'
+              },
+              {
+                name: 'Floyd Miles',
+                title: 'CEO, Traveller',
+                avatar: 'https://i.pravatar.cc/150?img=33',
+                rating: 3,
+                text: 'Morem Ipsum Dolor Siterey Amet Mean Earty Areasew Consec Taetur Adipisrvice Olivirg Ipsum Dolor Consectetur.'
+              },
+              {
+                name: 'Esther Howard',
+                title: 'CEO, Traveller',
+                avatar: 'https://i.pravatar.cc/150?img=45',
+                rating: 4,
+                text: 'Morem Ipsum Dolor Siterey Amet Mean Earty Areasew Consec Taetur Adipisrvice Olivirg Ipsum Dolor Consectetur.'
+              }
+            ].map((testimonial, idx) => (
               <div key={idx} className="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
                 <div className="flex items-center mb-6">
                   <img src={testimonial.avatar} alt={testimonial.name} className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mr-4" />
@@ -730,7 +1315,35 @@ const TourexWebsite = () => {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs.map((blog) => (
+            {[
+              {
+                id: 1,
+                title: 'Spiritual Sojourn: Pilgrimage Tours For Soul Seekers',
+                category: 'Travel Bner',
+                categoryColor: 'bg-purple-600',
+                date: '26th Sep, 2024',
+                readTime: '5 Mins Read',
+                image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500'
+              },
+              {
+                id: 2,
+                title: 'Wine Country Escapes: Vineyard Tours For Connoisseurs',
+                category: 'Hiking',
+                categoryColor: 'bg-purple-600',
+                date: '26th Sep, 2024',
+                readTime: '5 Mins Read',
+                image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500'
+              },
+              {
+                id: 3,
+                title: 'Thrills & Chills: Extreme Sports Tours For Adrenaline',
+                category: 'Adventure',
+                categoryColor: 'bg-purple-600',
+                date: '26th Sep, 2024',
+                readTime: '5 Mins Read',
+                image: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=500'
+              }
+            ].map((blog) => (
               <div key={blog.id} className="group cursor-pointer">
                 <div className="relative overflow-hidden rounded-lg mb-4">
                   <img src={blog.image} alt={blog.title} className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
